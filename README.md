@@ -232,8 +232,8 @@ FastAPI автоматически создаёт интерактивную д�
 
 ## 🧑‍💻 Автор
 
-**Имя:** *[твоё имя или ник]*  
-**GitHub:** [https://github.com/yourusername](https://github.com/yourusername)
+**Имя:** *Tigran*  
+**GitHub:** [https://github.com/TigranAko](https://github.com/TigranAko)
 
 ---
 
