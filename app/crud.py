@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from .models import UserBase, ToDoBase
-from .schemas import User, ToDo, Pagination, Filtration
+from models import UserBase, ToDoBase
+from schemas import User, ToDo, Pagination, Filtration
 from sqlalchemy import text
 
 

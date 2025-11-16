@@ -1,0 +1,54 @@
+version: "3.8"
+
+services:
+  web:
+    build: ./app
+    image: todoapi
+    container_name: todoapi
+    restart: always
+    command: "python main.py"
+    #command: "uvicorn main:app --host 0.0.0.0 --port 8000"
+    links:
+      - "postgres:dbps"
+    networks:
+      - dbnet
+    volumes:
+      - "./app:/app/www/todolist"
+    ports:
+      - "8000:80"
+    depends_on:
+      - postgres
+    
+
+  postgres:
+    image: postgres:18.1-alpine3.22
+    container_name: psgr
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: testdb
+      POSTGRES_USER: testuser
+      POSTGRES_PASSWORD: testpass
+    networks:
+      - dbnet
+
+  adminer:
+    image: adminer
+    container_name: adminer
+    restart: always
+    ports:
+      - "8080:8080"
+    links:
+      - "postgres:db"
+    networks:
+      - dbnet
+    depends_on:
+      - postgres
+
+networks:
+  dbnet:
+    driver: bridge
+
+volumes:
+  postgres-data:
+  todolist:

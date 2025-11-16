@@ -4,7 +4,8 @@ from sqlalchemy.orm import sessionmaker, Session, DeclarativeBase
 #from sqlalchemy
 
 #DB_URL = "sqlite+aiosqlite:///database2.db"
-DB_URL = "sqlite:///database2.db"
+# DB_URL = "sqlite:///database2.db"
+DB_URL = "postgresql+psycopg://testuser:testpass@dbps:5432/testdb"
 
 engine = create_engine(
         DB_URL,

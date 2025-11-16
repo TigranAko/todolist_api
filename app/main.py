@@ -1,12 +1,13 @@
 from fastapi import FastAPI, Depends, HTTPException, status,Query, Path
 from typing import Annotated
 
-from .schemas import ToDo, User, UserCreate, UserReturn, Pagination, Filtration
+from schemas import ToDo, User, UserCreate, UserReturn, Pagination, Filtration
 
 from contextlib import asynccontextmanager
-from .database import get_db, create_tables
-from .crud import get_users, get_todos, create_user, create_todo, delete_user, get_user, delete_todo, get_todo, update_todo, update_todo_completed
+from database import get_db, create_tables
+from crud import get_users, get_todos, create_user, create_todo, delete_user, get_user, delete_todo, get_todo, update_todo, update_todo_completed
 
+import uvicorn
 
 
 @asynccontextmanager
@@ -76,7 +77,7 @@ async def update_todo_info(todo_id: Annotated[int, Path()], todo: ToDo, db = Dep
 
 
 @app.patch("/todo")
-async def update_todos_completed(ids: Annoteated[str, Path()], completed: Annotated[bool, Path()]):
+async def update_todos_completed(ids: Annotated[str, Path()], completed: Annotated[bool, Path()]):
     ids = ids.split(',')
     for todo_id in ids:
         update_todo_completed(todo_id, completed)
@@ -96,3 +97,6 @@ async def get_todo_info(
 async def delete_todo_info(todo_id: Annotated[int, Path()], db = Depends(get_db)):
     delete_todo(todo_id , db)
     return {"message": "todo (task) deleted"}
+
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="0.0.0.0", port=80)
