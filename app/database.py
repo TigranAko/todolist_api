@@ -11,6 +11,7 @@ DB_URL = "postgresql+psycopg://testuser:testpass@dbps:5432/testdb"
 engine = create_engine(
     DB_URL,
     echo=True,
+    pool_pre_ping=True
     #        connect_args={"check_same_thread": False}  # Только для SQLite
 )
 

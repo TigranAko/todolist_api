@@ -30,8 +30,8 @@ class UserBase(Base):
     username: Mapped[str] = mapped_column(String())
     password: Mapped[str] = mapped_column(String())
     tasks: Mapped[list["ToDoBase"]] = relationship(
-        back_populates="user"
-    )  # , cascade="all, delete-orphan")
+        "ToDoBase", back_populates="user", cascade="all, delete-orphan"
+    )  # FIXME: может быть ошибка с sqlite
 
 
 class ToDoBase(Base):
@@ -41,7 +41,7 @@ class ToDoBase(Base):
     #    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
     #    user_id: Mapped[int] = ForeignKey("users.id", ondelete="CASCADE"
     user: Mapped["UserBase"] = relationship(
-        back_populates="tasks"
+        "UserBase", back_populates="tasks"
     )  # "users.id", ondelete="CASCADE"
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=True)
     title: Mapped[str] = mapped_column(String())
