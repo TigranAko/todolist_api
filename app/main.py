@@ -108,4 +108,5 @@ async def delete_todo_info(todo_id: Annotated[int, Path()], db=Depends(get_db)):
 
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=80)
+    uvicorn.run("main:app")
+    # uvicorn.run("main:app", host="0.0.0.0", port=80)
