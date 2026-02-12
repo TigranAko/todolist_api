@@ -1,10 +1,11 @@
-from app.dependencies.database import BaseModel
 from sqlalchemy import delete, insert, select, update
 from sqlalchemy.orm import Session
 
+from database import Base
+
 
 class SQLAlchemyRepository:
-    model: BaseModel
+    model: Base
     # TODO: replace commit to UoF
 
     def __init__(self, session: Session):
