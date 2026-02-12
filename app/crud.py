@@ -1,11 +1,7 @@
 from sqlalchemy.orm import Session
 
-from models import ToDoBase, UserBase
-from schemas import Filtration, Pagination, ToDo, User
-
-
-def get_users(db: Session):
-    return db.query(UserBase).all()
+from models import ToDoBase
+from schemas import Filtration, Pagination, ToDo
 
 
 def get_todos(filtration: Filtration, pagination: Pagination, db: Session):
@@ -44,29 +40,14 @@ def get_todos(filtration: Filtration, pagination: Pagination, db: Session):
         result = (
             db.query(ToDoBase)
             .order_by(
-                # pagination.sort_by if not pagination.sort_by.startswith('-') else desc(pagination.sort_by[1:])
+                # pagination.sort_by if not pagination.sort_by.startswith('-')
+                # else desc(pagination.sort_by[1:])
                 sort_field
             )
             .offset(pagination.offset)
             .limit(pagination.limit)
         )
     return result.all()
-
-
-def get_user(user_id, db: Session):
-    return db.query(UserBase).filter(UserBase.id == user_id).one()
-
-
-def create_user(user: User, db: Session):
-    user_db = UserBase(**user.model_dump())
-    db.add(user_db)
-    db.commit()
-
-
-def delete_user(user_id: int, db: Session):
-    db.query(UserBase).filter(UserBase.id == user_id).delete()
-    # db.query(ToDoBase).filter(ToDoBase.user_id == user_id).delete() # удаление должно быть из бд
-    db.commit()
 
 
 def create_todo(todo: ToDo, db: Session):

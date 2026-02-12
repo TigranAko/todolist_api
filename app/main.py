@@ -6,18 +6,15 @@ from fastapi import Depends, FastAPI, Path, Query
 
 from crud import (
     create_todo,
-    create_user,
     delete_todo,
-    delete_user,
     get_todo,
     get_todos,
-    get_user,
-    get_users,
     update_todo,
     update_todo_completed,
 )
 from database import create_tables, get_db
-from schemas import Filtration, Pagination, ToDo, UserCreate
+from schemas import Filtration, Pagination, ToDo
+from user_router import router as user_router
 
 
 @asynccontextmanager
@@ -28,32 +25,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
-
-@app.get("/")
-async def get_users_info(db=Depends(get_db)):
-    users = get_users(db)
-    return {
-        "users": users,
-    }
-
-
-@app.post("/register")  # , response_model=UserReturn)
-async def register(user: UserCreate, db=Depends(get_db)):
-    create_user(user, db)
-    return {"message": "User registered successfully!"}
-
-
-@app.get("/user/{user_id}")
-async def get_user_info(user_id: Annotated[int, Path()], db=Depends(get_db)):
-    user = get_user(user_id, db)
-    return user
-
-
-@app.delete("/user/{user_id}")
-async def delete_user_info(user_id: Annotated[int, Path()], db=Depends(get_db)):
-    # ADD AUTO DELETING TODOS
-    delete_user(user_id, db)
-    return {"message": "user deleted with tasks"}
+app.include_router(user_router)
 
 
 @app.get("/todos")
