@@ -1,4 +1,4 @@
-from fastapi import Depends
+from fastapi import Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from database import get_db
@@ -12,7 +12,12 @@ class UserService:
         self.repo = UserRepository(session)
 
     def register(self, user: UserCreate):
-        # TODO: Проверка на существование пользователч
+        if self.repo.is_have_username(user.username):
+            # TODO: change status code
+            # TODO: split app exceptions and http exceptions
+            raise HTTPException(
+                400, detail="Пользователь с таким именем уже существует"
+            )
         result = self.repo.add_one(user.model_dump())
         return result
 
