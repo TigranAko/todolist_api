@@ -5,29 +5,6 @@ from fastapi import Query
 from pydantic import BaseModel
 
 
-class User(BaseModel):
-    username: str
-    password: str
-
-
-class UserCreate(User):
-    pass
-
-
-class UserReturn(User):
-    id: int
-
-
-class ToDo(BaseModel):
-    id: int
-    user_id: int | None = None
-    title: str
-    description: str
-    completed: bool = False
-    created_at: datetime = datetime.now()
-    completed_at: datetime | None = None
-
-
 class Pagination(BaseModel):
     limit: Annotated[
         int,

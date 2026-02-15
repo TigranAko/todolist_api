@@ -2,8 +2,8 @@ from fastapi import Depends
 from sqlalchemy.orm import Session
 
 from database import get_db
-from schemas import UserCreate
 from user_repository import UserRepository
+from user_schemas import UserCreate
 
 
 class UserService:

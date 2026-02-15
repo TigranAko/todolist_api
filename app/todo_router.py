@@ -2,7 +2,7 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, Path
 
-from schemas import ToDo
+from todo_schemas import ToDo
 from todo_service import TodoService, get_todo_service
 
 router = APIRouter(prefix="/todo", tags=["ToDo"])
