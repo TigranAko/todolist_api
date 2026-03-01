@@ -14,8 +14,8 @@ class UnitOfWork:
 
         # TODO: При добавлении репозитория класс не должен изменяться
         # нарушение принципа sOlid
-        self.users = UserRepository(self.async_session_factory)
-        self.todos = TodoRepository(self.async_session_factory)
+        self.users = UserRepository(self.session)
+        self.todos = TodoRepository(self.session)
 
         return self
 
