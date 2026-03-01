@@ -1,24 +1,21 @@
 from fastapi import Depends, HTTPException
-from sqlalchemy.orm import Session
 
-from database import get_db
-from user_repository import UserRepository
+from uow import UnitOfWork, get_uow
 from user_schemas import UserCreate
 
 
 class UserService:
-    def __init__(self, session: Session):
-        self.session = session
-        self.repo = UserRepository(session)
+    def __init__(self, uow: UnitOfWork):
+        self.uow = uow
 
     async def register(self, user: UserCreate):
-        if await self.repo.is_have_username(user.username):
+        if await self.uow.users.is_have_username(user.username):
             # TODO: change status code
             # TODO: split app exceptions and http exceptions
             raise HTTPException(
                 400, detail="Пользователь с таким именем уже существует"
             )
-        result = await self.repo.add_one(user.model_dump())
+        result = await self.uow.users.add_one(user.model_dump())
         return result
 
     async def login(): ...
@@ -26,19 +23,20 @@ class UserService:
     async def logout(): ...
 
     async def get_all_users(self):
-        result = await self.repo.find_all()
+        result = await self.uow.users.find_all()
         return result
 
     async def about(self, user_id):
-        result = await self.repo.find_one(user_id)
+        result = await self.uow.users.find_one(user_id)
         return result
 
     async def update(): ...
 
     async def delete(self, user_id):
-        result = await self.repo.delete_one(user_id)
+        result = await self.uow.users.delete_one(user_id)
+        # TODO: Можно удалять задачи вручную
         return result
 
 
-async def get_user_service(session: Session = Depends(get_db)):
-    return UserService(session)
+async def get_user_service(uow: UnitOfWork = Depends(get_uow)):
+    return UserService(uow)
