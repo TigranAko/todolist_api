@@ -28,3 +28,8 @@ class UnitOfWork:
 
     async def rollback(self):
         await self.session.close()
+
+
+async def get_uow() -> UnitOfWork:
+    async with UnitOfWork() as uow:
+        yield uow
