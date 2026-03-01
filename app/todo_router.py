@@ -25,7 +25,7 @@ async def get_my_todos(
     service: TodoService = Depends(get_todo_service),
 ):
     # TODO: user_id должен определяться сам
-    return service.get_user_todos(user_id)
+    return await service.get_user_todos(user_id)
 
 
 @router.put("/{todo_id}")
@@ -33,7 +33,7 @@ async def get_user_todos(
     user_id: Annotated[int, Path()],
     service: TodoService = Depends(get_todo_service),
 ):
-    return service.get_user_todos(user_id)
+    return await service.get_user_todos(user_id)
 
 
 @router.post("/create")
@@ -41,7 +41,7 @@ async def add_todo(
     todo: ToDo,
     service: TodoService = Depends(get_todo_service),
 ):
-    service.create_todo(todo)
+    await service.create_todo(todo)
     return {"message": "ToDo created successfully!"}
 
 
@@ -51,7 +51,7 @@ async def creates_todos(
     service: TodoService = Depends(get_todo_service),
 ):
     for todo in todos:
-        service.create_todo(todo)
+        await service.create_todo(todo)
     return {"message": "ToDos created successfully!"}
 
 
@@ -62,7 +62,7 @@ async def update_todo_info(
     service: TodoService = Depends(get_todo_service),
 ):
     # TODO: Не работает
-    return service.update_todo(todo_id, todo)
+    return await service.update_todo(todo_id, todo)
 
 
 """
@@ -84,7 +84,7 @@ async def get_todo_info(
     todo_id: Annotated[int, Path()],
     service: TodoService = Depends(get_todo_service),
 ):
-    return service.get_todo(todo_id)
+    return await service.get_todo(todo_id)
 
 
 @router.delete("/{todo_id}")
@@ -92,5 +92,5 @@ async def delete_todo_info(
     todo_id: Annotated[int, Path()],
     service: TodoService = Depends(get_todo_service),
 ):
-    service.delete_todo(todo_id)
+    await service.delete_todo(todo_id)
     return {"message": "todo (task) deleted"}
