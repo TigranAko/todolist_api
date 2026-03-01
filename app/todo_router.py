@@ -15,7 +15,7 @@ async def get_todos_info(
     service: TodoService = Depends(get_todo_service),
 ):
     # result = get_todos(filtration, pagination, db)
-    result = service.get_all_todos()
+    result = await service.get_all_todos()
     return {"tasks": result}
 
 
