@@ -11,7 +11,7 @@ class UserService:
         self.session = session
         self.repo = UserRepository(session)
 
-    def register(self, user: UserCreate):
+    async def register(self, user: UserCreate):
         if self.repo.is_have_username(user.username):
             # TODO: change status code
             # TODO: split app exceptions and http exceptions
@@ -21,24 +21,24 @@ class UserService:
         result = self.repo.add_one(user.model_dump())
         return result
 
-    def login(): ...
+    async def login(): ...
 
-    def logout(): ...
+    async def logout(): ...
 
-    def get_all_users(self):
+    async def get_all_users(self):
         result = self.repo.find_all()
         return result
 
-    def about(self, user_id):
+    async def about(self, user_id):
         result = self.repo.find_one(user_id)
         return result
 
-    def update(): ...
+    async def update(): ...
 
-    def delete(self, user_id):
+    async def delete(self, user_id):
         result = self.repo.delete_one(user_id)
         return result
 
 
-def get_user_service(session: Session = Depends(get_db)):
+async def get_user_service(session: Session = Depends(get_db)):
     return UserService(session)

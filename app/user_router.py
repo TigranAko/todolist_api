@@ -11,7 +11,7 @@ router = APIRouter(prefix="/user", tags=["user"])
 @router.get("/all")
 async def get_users_info(service: UserService = Depends(get_user_service)):
     # service = get_user_service()
-    users = service.get_all_users()
+    users = await service.get_all_users()
     return {
         "users": users,
     }
@@ -19,7 +19,7 @@ async def get_users_info(service: UserService = Depends(get_user_service)):
 
 @router.post("/register")  # , response_model=UserReturn)
 async def register(user: UserCreate, service: UserService = Depends(get_user_service)):
-    service.register(user)
+    await service.register(user)
     return {"message": "User registered successfully!"}
 
 
@@ -27,7 +27,7 @@ async def register(user: UserCreate, service: UserService = Depends(get_user_ser
 async def get_user_info(
     user_id: Annotated[int, Path()], service: UserService = Depends(get_user_service)
 ):
-    user = service.about(user_id)
+    user = await service.about(user_id)
     return user
 
 
@@ -36,5 +36,5 @@ async def delete_user_info(
     user_id: Annotated[int, Path()], service: UserService = Depends(get_user_service)
 ):
     # ADD AUTO DELETING TODOS
-    user_id = service.delete(user_id)
+    user_id = await service.delete(user_id)
     return {"message": "user deleted with tasks", "user_id": user_id}
