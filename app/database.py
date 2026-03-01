@@ -1,9 +1,8 @@
-from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
+from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 from sqlalchemy.orm import (
     DeclarativeBase,
     Mapped,
     mapped_column,
-    sessionmaker,
 )
 from sqlalchemy.pool import StaticPool
 
@@ -35,7 +34,6 @@ else:
         pool_pre_ping=True,
     )
 
-Session = sessionmaker(autoflush=False, autocommit=False, bind=engine)
 LocalAsyncSession = async_sessionmaker(autoflush=False, autocommit=False, bind=engine)
 
 
@@ -53,11 +51,3 @@ async def create_tables():
 
 async def close_connection_pool():
     await engine.dispose()
-
-
-async def get_db():
-    session: AsyncSession = LocalAsyncSession()
-    try:
-        yield session
-    finally:
-        await session.aclose()
