@@ -12,22 +12,22 @@ class TodoService:
 
     async def get_all_todos(self):
         """Список всех задач (для админа)"""
-        result = self.repo.find_all()
+        result = await self.repo.find_all()
         return result
 
     async def get_user_todos(self, user_id: int):
         """Список задач пользователя"""
-        result = self.repo.find_user_todos(user_id)
+        result = await self.repo.find_user_todos(user_id)
         return result
 
     async def get_todo(self, todo_id: int):
         """Получить задачу"""
-        result = self.repo.find_one(todo_id)
+        result = await self.repo.find_one(todo_id)
         return result
 
     async def create_todo(self, todo):
         """Создать задачу"""
-        result = self.repo.add_one(todo.model_dump())
+        result = await self.repo.add_one(todo.model_dump())
         return result
 
     async def create_todos(self, todos):
@@ -35,17 +35,17 @@ class TodoService:
         # TODO: need optimization
         result = []
         for todo in todos:
-            result.append(self.repo.add_one(todo.model_dump()))
+            await result.append(await self.repo.add_one(todo.model_dump()))
         return result
 
     async def update_todo(self, todo_id, todo):
         """Создать задачу"""
-        result = self.repo.edit_one(todo_id, todo)
+        result = await self.repo.edit_one(todo_id, todo)
         return result
 
     async def delete_todo(self, todo_id):
         """Создать задачу"""
-        result = self.repo.delete_one(todo_id)
+        result = await self.repo.delete_one(todo_id)
         return result
 
 
