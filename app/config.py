@@ -25,13 +25,13 @@ class ConfigDB(BaseConfig):
     def db_url(self) -> str:
         match self.ENVIROMENT:
             case "TEST":
-                return self.TEST_DB_URL
+                return self.TEST_DB_URL.get_secret_value()
             case "DEV":
-                return self.DEV_DB_URL
+                return self.DEV_DB_URL.get_secret_value()
             case "PROD":
                 if self.PROD_DB_URL is None:
                     raise ValueError("Не удаось найти production базу данных")
-                return self.PROD_DB_URL
+                return self.PROD_DB_URL.get_secret_value()
 
 
 config_db = ConfigDB()

@@ -6,15 +6,15 @@ from sqlalchemy.orm import (
 )
 from sqlalchemy.pool import StaticPool
 
-test = True  # TODO: use .env file
-if test:
-    # DB_URL = "sqlite+aiosqlite:///database2.db"
-    # DB_URL = "sqlite:///database2.db"
-    DB_URL = "sqlite+aiosqlite:///:memory:"
+from config import config_db
+
+url_to_db = config_db.db_url
+
+if config_db.ENVIROMENT in {"TEST", "DEV"}:
     from sqlalchemy import event
 
     engine = create_async_engine(
-        DB_URL,
+        url_to_db,
         echo=True,
         connect_args={"check_same_thread": False},
         poolclass=StaticPool,
@@ -26,11 +26,9 @@ if test:
         cursor.execute("PRAGMA foreign_keys=ON")  # Включаем поддержку FK
         cursor.close()
 else:
-    DB_URL = "postgresql+psycopg://testuser:testpass@dbps:5432/testdb"
-
+    # "postgresql+psycopg://testuser:testpass@dbps:5432/testdb"
     engine = create_async_engine(
-        DB_URL,
-        echo=True,
+        url_to_db,
         pool_pre_ping=True,
     )
 
