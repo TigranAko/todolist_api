@@ -3,14 +3,13 @@ from contextlib import asynccontextmanager
 import uvicorn
 from fastapi import FastAPI
 
-from app.database import close_connection_pool, create_tables
+from app.database import close_connection_pool
 from app.todo_router import router as todo_router
 from app.user_router import router as user_router
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    await create_tables()
     yield
     await close_connection_pool()
 

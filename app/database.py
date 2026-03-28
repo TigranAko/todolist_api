@@ -39,12 +39,5 @@ class Base(DeclarativeBase):
     id: Mapped[int] = mapped_column(primary_key=True)
 
 
-async def create_tables():
-    async with engine.connect() as connection:
-        await connection.run_sync(Base.metadata.create_all)
-        await connection.commit()
-        await connection.aclose()
-
-
 async def close_connection_pool():
     await engine.dispose()
