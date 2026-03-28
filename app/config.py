@@ -4,7 +4,7 @@ from typing import Literal
 from pydantic import SecretStr, computed_field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-path_to_env = f"{Path().absolute().parent}/.env"
+path_to_env = f"{Path().absolute()}/.env"
 
 
 class BaseConfig(BaseSettings):

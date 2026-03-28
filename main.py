@@ -3,9 +3,9 @@ from contextlib import asynccontextmanager
 import uvicorn
 from fastapi import FastAPI
 
-from database import close_connection_pool, create_tables
-from todo_router import router as todo_router
-from user_router import router as user_router
+from app.database import close_connection_pool, create_tables
+from app.todo_router import router as todo_router
+from app.user_router import router as user_router
 
 
 @asynccontextmanager

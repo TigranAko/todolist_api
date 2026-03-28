@@ -1,7 +1,6 @@
+from app.database import Base
 from sqlalchemy import delete, insert, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
-
-from database import Base
 
 
 class SQLAlchemyRepository:

@@ -1,6 +1,5 @@
+from app.uow import UnitOfWork, get_uow
 from fastapi import Depends
-
-from uow import UnitOfWork, get_uow
 
 
 class TodoService:

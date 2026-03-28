@@ -1,3 +1,4 @@
+from app.config import config_db
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 from sqlalchemy.orm import (
     DeclarativeBase,
@@ -5,8 +6,6 @@ from sqlalchemy.orm import (
     mapped_column,
 )
 from sqlalchemy.pool import StaticPool
-
-from config import config_db
 
 url_to_db = config_db.db_url
 

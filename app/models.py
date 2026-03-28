@@ -1,9 +1,8 @@
 from datetime import datetime
 
+from app.database import Base
 from sqlalchemy import Boolean, DateTime, ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-
-from database import Base
 
 
 class UserBase(Base):

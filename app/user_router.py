@@ -1,9 +1,8 @@
 from typing import Annotated
 
+from app.user_schemas import UserCreate
+from app.user_service import UserService, get_user_service
 from fastapi import APIRouter, Depends, Path
-
-from user_schemas import UserCreate
-from user_service import UserService, get_user_service
 
 router = APIRouter(prefix="/user", tags=["user"])
 

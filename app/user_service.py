@@ -1,7 +1,6 @@
+from app.uow import UnitOfWork, get_uow
+from app.user_schemas import UserCreate
 from fastapi import Depends, HTTPException
-
-from uow import UnitOfWork, get_uow
-from user_schemas import UserCreate
 
 
 class UserService:

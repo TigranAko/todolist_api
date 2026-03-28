@@ -1,7 +1,6 @@
+from app.base_repository import SQLAlchemyRepository
+from app.models import UserBase
 from sqlalchemy import select
-
-from base_repository import SQLAlchemyRepository
-from models import UserBase
 
 
 class UserRepository(SQLAlchemyRepository):

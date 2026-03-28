@@ -1,9 +1,8 @@
 from typing import Annotated
 
+from app.todo_schemas import ToDo
+from app.todo_service import TodoService, get_todo_service
 from fastapi import APIRouter, Depends, Path
-
-from todo_schemas import ToDo
-from todo_service import TodoService, get_todo_service
 
 router = APIRouter(prefix="/todo", tags=["ToDo"])
 

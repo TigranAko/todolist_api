@@ -1,8 +1,7 @@
+from app.database import LocalAsyncSession
+from app.todo_repository import TodoRepository
+from app.user_repository import UserRepository
 from sqlalchemy.ext.asyncio import AsyncSession
-
-from database import LocalAsyncSession
-from todo_repository import TodoRepository
-from user_repository import UserRepository
 
 
 class UnitOfWork:
