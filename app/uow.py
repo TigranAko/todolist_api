@@ -26,6 +26,7 @@ class UnitOfWork:
         await self.session.commit()
 
     async def rollback(self):
+        await self.rollback()
         await self.session.close()
 
 
